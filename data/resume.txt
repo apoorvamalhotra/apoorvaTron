@@ -1,0 +1,162 @@
+APOORVA MALHOTRA
+12apoorvamalhotra@gmail.com | +1 (650) 664-7539 | Mountain View, CA | linkedin.com/in/apoorvamalhotra14
+
+SUMMARY
+
+Technical Product Manager with 7 years of experience building foundational AI platforms, automation self-service tools & developer-centric tools from the ground up. I thrive in ambiguous, high-autonomy environments, translating nascent research into tangible products. My expertise lies in shaping & shipping complex AI systems, defining developer workflows, designing APIs, & managing cross-functional collaboration that bridge the gap between business, research & engineering.
+
+SKILLS
+Product Management: Building from Scratch, Foundational Platform Strategy, Research & Engineering Collaboration, Cross-Functional Program Leadership, Process Creation & Optimization, Release Schedule Coordination, Articulating Vision in Written Documents (PRDs, Technical Specs)
+Developer Platforms & APIs: Developer Experience (DevEx) Improvement, API Design & Architecture (REST), Developer Workflow Analysis, CI/CD Pipeline Implementation, Swagger Documentation
+Technical & AI Expertise:
+AI/ML: AI Agents, Generative AI, Reinforcement Learning with Human Feedback, LLM Evaluation & Optimization, MLOps, Predictive Analytics, NLP
+Languages & Tools: Python, SQL, Go, Jenkins, Git, JIRA, AWS, Postman
+
+WORK EXPERIENCE
+Stealth Startup | Mountain View, CA
+AI Product Lead (May 2025 - Sep 2025)
+
+Pioneered the development of an AI platform, transforming a concept into a functional travel concierge capable of end-to-end planning & booking
+Situation: The startup began with an ambiguous concept for an AI-powered travel tool without a clear product definition.
+Task: My objective was to transform this abstract idea into a functional, market-ready AI platform.
+Action: I led the end-to-end product development, defined the core features, designed the system architecture, and created the strategic roadmap.
+Result: Successfully delivered a functional AI travel concierge capable of performing complex, end-to-end travel planning.
+
+Authored detailed technical specifications & Product Requirements Documents (PRDs) & designed the system architecture for core AI features
+Situation: To build the complex AI platform, the engineering team required clear, detailed, and unambiguous guidance.
+Task: I was responsible for translating the high-level product vision into actionable technical requirements for the development team.
+Action: I authored comprehensive Product Requirements Documents (PRDs) and detailed technical specifications, and I designed the foundational architecture for the core AI features.
+Result: Provided a clear blueprint that aligned the engineering and design, with stakeholders, which enabled rapid and focused prototype development.
+
+Engineering an avatar-integrated chatbot using advanced prompt engineering, creating & organizing technical prompts to fine-tune model performance
+Situation: The AI concierge's success depended on a highly effective and natural conversational user interface.
+Task: My goal was to design and implement the core chatbot interaction model to ensure a seamless user experience.
+Action: I engineered the chatbot, utilizing advanced prompt engineering techniques to create and organize a library of technical prompts to guide the AI's behavior.
+Result: This work significantly fine-tuned the model's performance, resulting in a more intuitive, effective, and human-like user experience.
+
+
+
+Meta (affected by Reduction in Workforce) | Fremont, CA
+Technical Program Manager - Global Security (Jan 2025 - Mar 2025)
+
+Engineered GPS anomaly detection prototype using Python & Folium, enabling real-time monitoring & alerts
+Situation: The Global Security team at Meta needed a proactive way to monitor their network of GPS devices for anomalies in real-time.
+Task: I was tasked with quickly developing a phased prototype to prove the feasibility and value of an automated anomaly detection system.
+Action: Using Python and the Folium library, I along with the engineering team developed a functional proof-of-concept that could ingest live GPS data, process it, and flag statistical anomalies on a map. We considered factors like distance travelled in certain amount of time, direction of travel and elevation in a given time frame to flag deviations.
+Result: The prototype successfully enabled real-time monitoring and alerts, demonstrating a viable and valuable solution for enhancing the organization's security operations.
+
+Led & developed BI dashboards with predictive analytics for Meta’s Security org, strengthening data governance, ISO-compliant reporting & data-driven decision-making to optimize forensic lab operations
+Situation: The security organization's forensic lab operations were managed using disparate data sources, which hindered strategic decision-making.
+Task: My objective was to centralize operational data and provide leadership with predictive analytics for better resource planning and risk management.
+Action: I led the development of a suite of BI dashboards, incorporating predictive models for workload forecasting and ensuring all reporting was ISO-compliant.
+Result: The dashboards strengthened data governance and empowered leadership with data-driven insights, leading to the optimization of forensic lab operations.
+
+
+
+Copart | Dallas, TX
+Technical Product Manager - Data & AI (Aug 2024 - Jan 2025)
+
+Spearheaded B2C registration overhaul program, cutting activation time by 95% (45 mins to less than 2 mins) & saving $500K through OCR & facial recognition
+Situation: Copart's user registration was a manual, 45-minute ordeal, funnel analysis led to high user drop-off rates and significant operational costs.
+Task: My mission was to lead a major, cross-functional program to completely automate and overhaul the entire B2C registration process.
+Action: I managed over 20 cross-functional stakeholders to implement a new system leveraging OCR and facial recognition technologies. We utilized Veriff (third party tool) due to its support for over 200 types of acceptable verification documents.
+Result: The program was a major success, cutting user activation time by 95% (to under 2 minutes) and saving the company $500K annually.
+
+Led the internal Gen AI pilot programs, Code Genie, boosting developer productivity by 10% & AI-powered airbag detection in vehicle image
+Situation: The company wanted to explore GenAI's potential to both boost developer productivity and innovate on core business processes, like vehicle damage assessment.
+Task: My task was to lead two key GenAI pilot programs: "Code Genie" for developers, and an "AI Playground" initiative focused on image recognition for vehicle damage.
+Action: For Code Genie, I led the integration of LLMs like Gemini and GPT with developer platforms like VSCode to help engineers understand and refactor legacy code. For the AI Playground, I spearheaded a project to use OCR models to detect deployed airbags in vehicle images, which was also extended to detect VIN numbers from vehicle plates to avoid manual assessment.
+Result: The Code Genie pilot successfully boosted developer productivity by 10% and was approved for a wider rollout. The airbag detection PoC demonstrated the feasibility of using AI to automate key parts of the damage assessment process, paving the way for future investment.
+
+
+
+Scale AI (affected by Reduction in Workforce) | San Francisco, CA
+Advanced AI Coding Specialist - Gen AI (Jan 2024 - May 2024)
+
+Fine-tuned AI LLM models through RLHF: evaluation & optimization across 15+ use cases, leveraging models such as Gemini(Bard), GPT-4, Llama etc
+Situation: Standard, off-the-shelf LLMs were not performing adequately for highly specific and nuanced client use cases.
+Task: My responsibility was to significantly improve model performance through rigorous, targeted evaluation and fine-tuning.
+Action: I applied Reinforcement Learning with Human Feedback (RLHF) techniques across more than 15 distinct use cases, evaluating and optimizing models like GPT-4 and Gemini.
+Result: This process dramatically improved model alignment and output quality for specialized tasks, ensuring we met complex client requirements.
+
+Led the data science program Python & SQL, acting as a liaison between stakeholders & data analysts to reinforce data accuracy & governance
+
+Managed & executed data labeling, annotation & auditing operations to ensure precision & quality
+
+
+Fidelity International Limited | India
+Technical Product Manager II (Data Lead)– Global Infrastructure Automation (Sep 2020 - Jul 2022)
+
+Identified problem space & analyzed data to own & develop E2E lifecycle of an automation product, including defining & tracking KPIs reducing the delivery time of vulnerability detection & report generation by 5x
+Situation: The manual process for server vulnerability detection was slow and created security risks. For any new team to start development on a new project, the PM used to request a new server flagged “green” which meant server going through a series of vulnerability and configuration checks. This process was tedious and required dependent teams to work together to complete the workflow. This entire process took ~10 business days.
+Task: In an ambiguous environment, I needed to create an automation product from scratch.
+Action: I identified the problem, defined KPIs, and managed the full product lifecycle. I designed and architected the entire automated workflow with Nexpose API integration for server scans and ServiceNow logging and auditing. We also ended up using NLP for remediations report generation based on scan reports to help the requestor fix issues quickly and with ease.
+Result: Reduced vulnerability detection and report generation time by 5x from initially being 10 business days to just a few hours.
+
+Steered product solutioning by crafting PRD & collaborating with 6 cross-functional teams to collect server backup data. Developed & automated reports for visualization enhancing data-driven decision making
+Situation: A lack of centralized server backup data was causing production issues.
+Task: My task was to design a centralized data collection and reporting solution.
+Action: I crafted the PRD, collaborated with 6 teams, and delivered automated reports via a new Oracle DB.
+Result: Decreased production issues by 43% and slashed data retrieval time by 19%.
+
+Performed anomaly detection on 8,000+ servers to determine backup failure & compliance gaps; insights from analysis led to server decommissioning, optimizing resource allocation & achieving 7% cost savings
+Situation: The company was incurring unnecessary costs from thousands of servers with backup failures.
+Task: I needed to analyze server data to identify cost-saving opportunities.
+Action: I performed anomaly detection on 8,000+ servers to find failures and unused "ghost" servers.
+Result: My analysis led to a server decommissioning initiative that achieved 7% cost savings.
+
+Architected a developer-centric RESTful API for automation workflows & standard changes for PaaS deployments to reduce time to market by 86%
+Situation: Internal developers were slowed down by a manual and cumbersome process for PaaS deployments.
+Task: My goal was to create a standardized, automated solution to accelerate their workflows.
+Action: I designed and architected a secure, developer-centric RESTful API for automation. We utilized Layer7 for authentication and authorization, Jenkins for deployment and ServiceNow Standard Change Tickets for this workflow.
+Result: Reduced the time-to-market for developer PaaS deployments by 86%.
+
+
+
+Technical Product Manager I (Founding Member) – Global Infrastructure Automation (Jul 2019 - Aug 2020)
+
+Implemented an ML-based model for forecasting operational costs during COVID by analyzing employee engagement statistics to optimize cost & achieve a cost accuracy rate of 91.4%
+Situation: During COVID-19, the company needed to accurately forecast operational costs.
+Task: I was tasked with developing a data-driven model to predict costs.
+Action: I analyzed employee engagement stats (surveys, HR records and actual employee sensitive information) and implemented an ML forecasting model.
+Result: The model achieved a cost accuracy prediction rate of 91.4%.
+
+Demonstrated deep knowledge of developer workflows by defining & implementing standards for CI/CD pipelines, software testing, & integrations, which decreased post-deployment issues by 27%
+Situation: As a new team, we lacked standardized practices, leading to frequent and costly post-deployment issues.
+Task: I took the initiative to establish a robust, end-to-end development lifecycle to improve quality and predictability.
+Action: I designed and implemented a comprehensive set of standards, centered around a CI/CD pipeline using Jenkins and Docker for containerized deployments to our PaaS environment. The pipeline enforced critical quality gates, including a 70% unit test coverage check with SonarQube, and automated smoke, functional, and integration tests. To ensure stability and auditability, the process was integrated with ServiceNow to automatically manage change tickets and utilized a blue-green deployment strategy for safe releases.
+Result: This effort directly led to a 27% decrease in post-deployment issues, creating a more stable and efficient development workflow for all dev teams.
+
+Authored program onboarding guides, integration guides, release notes & knowledge base articles, lowering production incidents by 15%
+Situation: Production incidents rooting from self-service platforms were often caused by a lack of clear user documentation.
+Task: My objective was to reduce these incidents by providing high-quality guides.
+Action: I authored a full suite of documentation, including onboarding guides, release notes, and knowledge base articles.
+Result: My work successfully lowered production incidents by 15%.
+
+
+
+Associate Product Manager – Data, Security & Infrastructure Automation (Jul 2018 - Jun 2019)
+
+Engineered a product roadmap for creating an automation for managing user identities, roles & permissions across organization by analyzing Nexpose data to generate feed files using Nexpose APIs for IAM portal, reducing time for user data management from 1 hour to 4 minutes per day
+Situation: Managing user identities was a manual and prone to errors, 1-hour daily task for the security team.
+Task: I was tasked with creating a product roadmap to automate this entire process.
+Action: I engineered a roadmap for a tool that used Nexpose APIs to auto-generate files for the IAM portal.
+Result: The resulting automation reduced the daily management time from 1 hour to just 4 minutes.
+
+Efficiently built consensus on solution expectations among dependent teams, leading to 7% reduction in scope creeps
+Situation: Misaligned expectations among dependent teams were causing frequent scope creep.
+Task: I needed to implement a process to ensure upfront consensus.
+Action: I established structured requirement-gathering sessions and formal sign-off processes.
+Result: This new process led to a 7% reduction in scope creep across my projects.
+
+EDUCATION
+CARNEGIE MELLON UNIVERSITY – Master of Science in Software Management | Mountain View, CA 				            3.92/4.0
+Completed Product Management track which is equivalent to a product management focused MBA track for tech professionals
+Coursework: Product Definition & Validation, Innovation & Entrepreneurship, Architecture for Product Managers, Business of Software
+
+THE NORTHCAP UNIVERSITY – Bachelor of Technology in Computer Science & Engineering | Gurgaon, India 			                               3.51/4.0 
+
+
+ACCOLADES & LEADERSHIP
+Founding member - Global Infrastructure Automation, spearheading an initiative to analyze data & advance automation throughout the organization
+Recognized as a finalist for the ‘Global Technology Award - Brilliant at Basics' at Fidelity International Limited

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApoorvaTron - Personal RAG Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Session ID Popup -->
+    <div id="session-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-avatar">🤖</div>
+            <h2>Welcome to ApoorvaTron</h2>
+            <p>Click "Start Chat" to begin your conversation with ApoorvaTron, a personal AI assistant for Apoorva's professional background.</p>
+            <div class="popup-input-group">
+                <div class="popup-buttons">
+                    <button id="start-chat-btn" class="btn-primary">Start Chat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extraction Popup -->
+    <div id="extraction-popup" class="popup-overlay hidden">
+        <div class="popup-content extraction-content">
+            <h2>Extracted Travel Details</h2>
+            <div id="extraction-json" class="json-display"></div>
+            <div class="popup-buttons">
+                <button id="close-extraction-btn" class="btn-primary">Close</button>
+                <button id="copy-extraction-btn" class="btn-secondary">Copy JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-section page layout -->
+    <div class="page-container">
+        <!-- Left section with Apoorva image for welcome vibe -->
+        <div class="left-section">
+            <!-- Apoorva image is set as background in CSS -->
+        </div>
+
+        <!-- Right section with chat window -->
+        <div class="right-section">
+            <!-- Main Chat Interface -->
+            <div id="chat-container" class="hidden">
+                <div id="chat-header">
+                    <div class="header-left">
+                        <div class="ava-avatar">🤖</div>
+                        <h3>ApoorvaTron</h3>
+                    </div>
+                    <div id="session-info">
+                        <button id="switch-session-btn" class="btn-switch-session">New Chat</button>
+                    </div>
+                </div>
+                <div id="chat-box"></div>
+                <div id="input-area">
+                    <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+                    <button id="send-button">Send</button>
+                    <button id="see-extraction-btn" class="btn-extraction hidden">See Extraction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+runtime: python311
+service: apoorvatron
+
+env_variables:
+  GEMINI_API_KEY: "AIzaSyAQp38yQpSAQMDdO1QLBMr9maVk4GetrTo"
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 1
