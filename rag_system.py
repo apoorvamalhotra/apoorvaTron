@@ -80,6 +80,54 @@ class PersonalRAGChatbot:
             st.error(f"Error creating vector store: {str(e)}")
             return False
     
+    def _smart_workflow_retrieve(self, question):
+        """Smart workflow: timeline questions -> sys prompt -> retrieve; company questions -> direct retrieve"""
+        question_lower = question.lower()
+        
+        # Check if question mentions a specific company
+        companies = {
+            'stealth startup': 'Stealth Startup',
+            'startup': 'Stealth Startup',
+            'meta': 'Meta', 
+            'facebook': 'Meta',
+            'copart': 'Copart',
+            'scale ai': 'Scale AI',
+            'fidelity': 'Fidelity'
+        }
+        
+        # Direct company name questions
+        for keyword, company_name in companies.items():
+            if keyword in question_lower:
+                return self._retrieve_company_experience(company_name)
+        
+        # Timeline/experience questions - let system prompt handle company identification
+        timeline_keywords = ['most recent', 'last company', 'current', 'latest', 'recent experience', 'previous', 'earliest', 'first']
+        if any(keyword in question_lower for keyword in timeline_keywords):
+            # For timeline questions, get broader context and let system prompt decide
+            retriever = self.vectorstore.as_retriever(search_kwargs={"k": 6})
+            return retriever.get_relevant_documents(question)
+        
+        # General questions - default retrieval
+        retriever = self.vectorstore.as_retriever(search_kwargs={"k": 4})
+        return retriever.get_relevant_documents(question)
+    
+    def _retrieve_company_experience(self, company_name):
+        """Retrieve experience for a specific company"""
+        # Search for chunks containing this company name with more specific queries
+        if company_name == "Meta":
+            company_docs = self.vectorstore.similarity_search("Meta Technical Program Manager Global Security GPS anomaly detection", k=4)
+        elif company_name == "Copart":
+            company_docs = self.vectorstore.similarity_search("Copart Technical Product Manager Generative AI platform", k=4)
+        elif company_name == "Stealth Startup":
+            company_docs = self.vectorstore.similarity_search("Stealth Startup AI Product Lead travel concierge", k=4)
+        elif company_name == "Scale AI":
+            company_docs = self.vectorstore.similarity_search("Scale AI Product Manager", k=4)
+        elif company_name == "Fidelity":
+            company_docs = self.vectorstore.similarity_search("Fidelity International Limited Global Infrastructure Automation", k=4)
+        else:
+            company_docs = self.vectorstore.similarity_search(company_name, k=4)
+        
+        return company_docs
     
     def ask_question(self, question, session_id=None):
         """Ask a question and get an answer using Gemini API"""
@@ -91,9 +139,16 @@ class PersonalRAGChatbot:
             if not session_id:
                 session_id = str(uuid.uuid4())
             
-            # Retrieve relevant documents
-            retriever = self.vectorstore.as_retriever(search_kwargs={"k": 4})
-            docs = retriever.get_relevant_documents(question)
+            # Smart workflow: Determine question type and retrieve accordingly
+            docs = self._smart_workflow_retrieve(question)
+            
+            # Debug: Print retrieved chunks for company questions
+            question_lower = question.lower()
+            if any(company in question_lower for company in ['meta', 'copart', 'stealth', 'startup', 'scale', 'fidelity']):
+                print(f"DEBUG - Question: {question}")
+                print(f"DEBUG - Retrieved {len(docs)} chunks:")
+                for i, doc in enumerate(docs):
+                    print(f"  {i+1}. {doc.page_content[:100]}...")
             
             # Extract context from retrieved documents
             context_documents = [doc.page_content for doc in docs]

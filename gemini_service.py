@@ -117,9 +117,9 @@ class GeminiAPIService:
                 }
             ],
             "generationConfig": {
-                "temperature": 0.1,
-                "top_p": 0.8,
-                "top_k": 40
+                "temperature": 0.0,
+                "top_p": 0.5,
+                "top_k": 30
             }
         }
         
@@ -158,9 +158,9 @@ class GeminiAPIService:
             },
             "contents": contents,
             "generationConfig": {
-                "temperature": 0.1,
-                "top_p": 0.8,
-                "top_k": 40
+                "temperature": 0.0,
+                "top_p": 0.5,
+                "top_k": 20
             }
         }
         
@@ -170,13 +170,15 @@ class GeminiAPIService:
         """Format user message to include context documents and user input."""
         context_text = "\n\n".join(context_documents) if context_documents else "No relevant context found."
         
-        formatted_message = f"""Context Information:
+        formatted_message = f"""IMPORTANT: You must ONLY use information from the context below. Do not add any details not explicitly mentioned in the context.
+
+CONTEXT INFORMATION:
 {context_text}
 
-User's Question:
+USER'S QUESTION:
 {user_input}
 
-Please answer the user's question based on the context information provided above."""
+INSTRUCTIONS: Answer the user's question using ONLY the information provided in the context above. Do not invent, assume, or add any details not present in the context."""
         
         return formatted_message
     
