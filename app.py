@@ -111,4 +111,5 @@ if __name__ == '__main__':
         logger.error(f"Failed to initialize RAG system: {str(e)}")
     
     # Run the Flask app
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port, debug=False)
