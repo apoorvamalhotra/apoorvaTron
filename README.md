@@ -1,206 +1,130 @@
-# Personal RAG Chatbot for Resume
+# ApoorvaTron - Personal RAG Chatbot
 
-A Retrieval-Augmented Generation (RAG) chatbot that can answer questions about Apoorva's professional experience based on resume and behavioral interview stories.
+A Retrieval-Augmented Generation (RAG) chatbot that represents Apoorva Malhotra, answering questions about her professional experience, achievements, and career stories using her resume and behavioral interview data.
 
 ## Features
 
-- **Document Processing**: Automatically chunks resume and behavioral Q&A documents
-- **Vector Search**: Uses Hugging Face embeddings with Chroma vector database
-- **AI Responses**: Powered by Google Gemini 2.0 Flash via direct API calls
-- **Web Interface**: Clean, intuitive Streamlit frontend
-- **Source Transparency**: Shows which documents were used for each answer
-- **Conversation Memory**: Maintains conversation history per session
-- **API Statistics**: Real-time tracking of API call success/failure rates
+- **AI-Powered Responses**: Uses Google Gemini 2.5 Flash for intelligent, context-aware answers
+- **Document-Based Knowledge**: Built from resume and behavioral Q&A documents
+- **Vector Search**: ChromaDB with Hugging Face embeddings for accurate information retrieval
+- **Web Interface**: Clean, modern Flask-based chat interface
+- **Conversation Memory**: Maintains session-based conversation history
+- **Real-time Stats**: API usage and performance monitoring
 
-## Tech Stack
+## Live Demo
 
-- **Python**: Core programming language
-- **LangChain**: Document processing and chunking
-- **Sentence Transformers**: Hugging Face embeddings (`all-MiniLM-L6-v2`)
-- **Chroma**: Local vector database for embeddings storage
-- **Google Gemini API**: Direct API calls for generating responses
-- **Flask**: Web application framework for the chat interface
-- **Streamlit**: Alternative web application interface
-- **Requests**: HTTP library for API communication
+**Deployed on Google Cloud Run**: [URL will be here after deployment]
 
-## Prerequisites
+## 🛠️ Tech Stack
 
-- Python 3.8 or higher
-- Google Gemini API key (free tier available)
+- **Backend**: Python Flask
+- **AI/ML**: Google Gemini API, LangChain, Sentence Transformers
+- **Vector Database**: ChromaDB
+- **Frontend**: HTML, CSS, JavaScript
+- **Deployment**: Google Cloud Run (serverless)
+
 
 ## Quick Start
 
-### 1. Clone and Setup
+### Local Development
 
-```bash
-# Navigate to your project directory
-cd apoorvatron
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/apoorvamalhotra/apoorvaTron.git
+   cd apoorvaTron
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
-```
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 2. Get Gemini API Key
+3. **Set up environment**
+   ```bash
+   # Create .env file
+   echo "GEMINI_API_KEY=your_actual_api_key_here" > .env
+   ```
 
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create a new API key
-3. Copy the API key
+4. **Run the application**
+   ```bash
+   python app.py
+   ```
+   
+   Visit: `http://localhost:8080`
 
-### 3. Configure Environment
+### Google Cloud Deployment
 
-Create a `.env` file in the project root and add your Gemini API key:
+1. **Go to Google Cloud Console**
+   - Visit: https://console.cloud.google.com
+   - Create a new project
 
-```bash
-# Create .env file and add your API key
-GEMINI_API_KEY=your_actual_api_key_here
-```
+2. **Enable APIs**
+   - Cloud Run API
+   - Cloud Build API
 
-### 4. Prepare Your Documents
-
-Replace the content in these files with your actual data:
-- `data/resume.txt` - Your resume content
-- `data/behavioral_qa.txt` - Your behavioral interview stories in STAR format
-
-### 5. Run the Application
-
-You have two options to run the application:
-
-**Option 1: Flask Web App (Recommended)**
-```bash
-python app.py
-```
-The application will open in your browser at `http://localhost:8080`
-
-**Option 2: Streamlit Interface**
-```bash
-streamlit run rag_system.py
-```
-The application will open in your browser at `http://localhost:8501`
+3. **Deploy from GitHub**
+   - Go to Cloud Run → Create Service
+   - Connect repository: `apoorvamalhotra/apoorvaTron`
+   - Set environment variable: `GEMINI_API_KEY=your_key`
+   - Deploy!
 
 ## Usage
 
-### Flask Web App
-1. **Start Chat**: Click "Start Chat" to begin your conversation with Apoorvatron (a random test ID is generated automatically)
-2. **Ask Questions**: Type questions about Apoorva's experience, achievements, or career stories
-3. **View Sources**: The AI will show which parts of the documents were used for each answer
-4. **Switch Sessions**: Use the "Switch Session" button to start a new conversation with a new random test ID
-
-### Streamlit Interface
-1. **Initialize System**: Click "Initialize System" in the sidebar to load and process your documents
-2. **Ask Questions**: Type questions about your experience, achievements, or career stories
-3. **View Sources**: Expand "Source Information" to see which parts of your documents were used
-
 ### Sample Questions
 
-- "What was Apoorva's biggest accomplishment at Copart?"
-- "Tell me about Apoorva's machine learning experience"
-- "What technologies does Apoorva know?"
-- "Describe a time Apoorva led a team through a crisis"
-- "What is Apoorva's educational background?"
+- "What was your last company?"
+- "Tell me about your AI/ML experience"
+- "What technologies do you know?"
+- "Describe a time you led a team through a crisis"
+- "What's your educational background?"
+- "Tell me about your product management experience"
+
 
 ## Project Structure
 
 ```
 apoorvatron/
+├── app.py                 # Main Flask application
+├── app.yaml              # Google Cloud configuration
+├── rag_system.py         # RAG logic and document processing
+├── gemini_service.py     # Gemini API integration
+├── sys_prompt.py         # System prompts 
+├── requirements.txt      # Python dependencies
 ├── data/
-│   ├── resume.txt              # Resume content
-│   └── behavioral_qa.txt       # Behavioral Q&A stories
-├── rag_system.py              # Main Streamlit application
-├── gemini_service.py          # Gemini API service
-├── sys_prompt.py              # System prompt configuration
-├── app.py                    # Flask web application
-├── requirements.txt           # Python dependencies
-├── run.py                    # Application launcher
-├── test_system.py            # System testing script
-├── templates/
-│   └── index.html            # HTML template for web UI
+│   ├── resume.txt        # Resume content
+│   └── behavioral_qa.txt # Behavioral Q&A stories
 ├── static/
-│   ├── style.css             # CSS styling
-│   ├── script.js             # JavaScript functionality
-│   └── images/               # UI images
-├── chroma_db/               # Vector database (created automatically)
-└── README.md               # This file
+│   ├── style.css         # Styling
+│   ├── script.js         # Frontend logic
+│   └── images/           # UI assets
+├── templates/
+│   └── index.html        # Chat interface
+└── README.md
 ```
 
 ## Configuration
 
-### Document Chunking
-The system uses `RecursiveCharacterTextSplitter` with:
-- Chunk size: 1000 characters
-- Chunk overlap: 200 characters
+### Document Processing
+- **Chunk Size**: 1000 characters
+- **Chunk Overlap**: 200 characters
+- **Embedding Model**: `sentence-transformers/all-MiniLM-L6-v2`
 
-### Embeddings
-- Model: `sentence-transformers/all-MiniLM-L6-v2`
-- Device: CPU (change to 'cuda' for GPU)
-
-### Vector Database
-- Database: Chroma
-- Storage: Local directory (`./chroma_db`)
-- Retrieval: Top 4 most relevant chunks
-
-### LLM Settings
-- Model: Gemini 2.0 Flash (via direct API calls)
-- Temperature: 0.1 (for consistent responses)
-- API Endpoint: Google Generative Language API
+### AI Settings
+- **Model**: Gemini 2.0 Flash
+- **Temperature**: 0.1 (consistent responses)
+- **Retrieval**: Top 4 most relevant chunks
 
 ## How It Works
 
 1. **Document Loading**: Reads resume and behavioral Q&A files
-2. **Text Chunking**: Splits documents into manageable chunks
-3. **Embedding Creation**: Converts text chunks to vector embeddings
-4. **Vector Storage**: Stores embeddings in Chroma database
+2. **Text Chunking**: Splits documents into manageable pieces
+3. **Embedding Creation**: Converts text to vector embeddings
+4. **Vector Storage**: Stores embeddings in ChromaDB
 5. **Query Processing**: Converts user questions to embeddings
 6. **Similarity Search**: Finds most relevant document chunks
-7. **Response Generation**: Uses Gemini API to generate answers based on retrieved context
-8. **Conversation History**: Maintains session-based conversation memory
-
-## Troubleshooting
-
-### Common Issues
-
-**API Key Error**
-```
-Please set your GEMINI_API_KEY in the .env file
-```
-- Ensure your `.env` file exists and contains the correct API key
-
-**Embeddings Loading Error**
-```
-Error loading embeddings
-```
-- Check internet connection for downloading the model
-- Ensure sufficient disk space
-
-**Document Loading Error**
-```
-Error loading documents
-```
-- Verify that `data/resume.txt` and `data/behavioral_qa.txt` exist
-- Check file permissions
-
-### Performance Tips
-
-- First run may be slow due to model downloads
-- Consider using GPU for embeddings if available
-- Vector database persists between runs for faster startup
-
-## Future Enhancements
-
-- [ ] Support for PDF and DOCX files
-- [ ] Multiple embedding models comparison
-- [ ] Conversation memory/history
-- [ ] Export chat conversations
-- [ ] Advanced search filters
-- [ ] Multi-language support
-
-## License
-
-This project is for personal use and educational purposes.
-
-## Contributing
-
-Feel free to fork this project and customize it for your own resume and career stories!
+7. **Response Generation**: Uses Gemini API with retrieved context
+8. **Session Management**: Maintains conversation history
 
 ---
 
-**Happy chatting with your AI assistant!**
+**Built by Apoorva Malhotra**
