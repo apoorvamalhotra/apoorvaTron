@@ -235,7 +235,7 @@ def main():
         The system uses:
         - Hugging Face embeddings
         - Chroma vector database
-        - Gemini 2.0 Flash LLM
+        - Gemini 2.5 Flash LLM
         - Document chunking with LangChain
         """)
 

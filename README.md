@@ -15,7 +15,7 @@ A Retrieval-Augmented Generation (RAG) chatbot that represents Apoorva Malhotra,
 
 **Deployed on Google Cloud Run**: [URL will be here after deployment]
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend**: Python Flask
 - **AI/ML**: Google Gemini API, LangChain, Sentence Transformers
@@ -110,7 +110,7 @@ apoorvatron/
 - **Embedding Model**: `sentence-transformers/all-MiniLM-L6-v2`
 
 ### AI Settings
-- **Model**: Gemini 2.0 Flash
+- **Model**: Gemini 2.5 Flash
 - **Temperature**: 0.1 (consistent responses)
 - **Retrieval**: Top 4 most relevant chunks
 
