@@ -57,6 +57,26 @@ I can answer questions about Apoorva's professional experience, achievements, an
                 'status': 'ready'
             })
         
+        # Initialize RAG system if not already done
+        if rag_chatbot.vectorstore is None:
+            logger.info("Initializing RAG system on first request...")
+            try:
+                chunks = rag_chatbot.load_and_chunk_documents()
+                if chunks:
+                    rag_chatbot.create_vectorstore(chunks)
+                    logger.info("RAG system initialized successfully!")
+                else:
+                    return jsonify({
+                        'error': 'Failed to initialize the knowledge base. Please try again later.',
+                        'userid': userid
+                    }), 500
+            except Exception as e:
+                logger.error(f"Failed to initialize RAG system: {str(e)}")
+                return jsonify({
+                    'error': 'Failed to initialize the knowledge base. Please try again later.',
+                    'userid': userid
+                }), 500
+        
         # Process the question using RAG system
         answer, sources = rag_chatbot.ask_question(user_input, userid)
         
@@ -98,18 +118,7 @@ def stats():
         return jsonify({'error': 'Could not retrieve statistics'}), 500
 
 if __name__ == '__main__':
-    # Initialize the system
-    logger.info("Initializing ApoorvaTron RAG system...")
-    try:
-        chunks = rag_chatbot.load_and_chunk_documents()
-        if chunks:
-            rag_chatbot.create_vectorstore(chunks)
-            logger.info("RAG system initialized successfully!")
-        else:
-            logger.error("Failed to load documents")
-    except Exception as e:
-        logger.error(f"Failed to initialize RAG system: {str(e)}")
-    
-    # Run the Flask app
+    # Run the Flask app - RAG system will initialize on first request
+    logger.info("Starting ApoorvaTron Flask app...")
     port = int(os.environ.get('PORT', 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
