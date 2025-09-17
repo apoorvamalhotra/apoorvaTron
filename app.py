@@ -92,7 +92,7 @@ I can answer questions about Apoorva's professional experience, achievements, an
                 }), 500
         
         # Process the question using RAG system
-        answer, sources = rag_chatbot.ask_question(user_input, userid)
+        answer, _ = rag_chatbot.ask_question(user_input, userid)
         
         # Store the conversation
         gemini_service.store_conversation(userid, user_input, answer)

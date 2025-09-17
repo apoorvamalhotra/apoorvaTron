@@ -2,10 +2,16 @@ import os
 import logging
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
 from gemini_service import gemini_service
 from dotenv import load_dotenv
 import uuid
+
+# Try to import embeddings with fallback
+try:
+    from langchain_community.embeddings import HuggingFaceEmbeddings
+    EMBEDDINGS_AVAILABLE = True
+except ImportError:
+    EMBEDDINGS_AVAILABLE = False
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -20,7 +26,12 @@ class PersonalRAGChatbot:
         self.setup_embeddings()
         
     def setup_embeddings(self):
-        """Initialize Hugging Face embeddings"""
+        """Initialize embeddings - try multiple approaches"""
+        if not EMBEDDINGS_AVAILABLE:
+            logger.error("Embeddings not available - cannot initialize RAG system")
+            self.embeddings = None
+            return False
+            
         try:
             logger.info("Loading Hugging Face embeddings model...")
             self.embeddings = HuggingFaceEmbeddings(
@@ -83,8 +94,20 @@ class PersonalRAGChatbot:
                     logger.error("Failed to load embeddings")
                     return False
             
-            logger.info("Creating Chroma vector store...")
-            # Create Chroma vector store
+            # Try to load existing vector store first
+            try:
+                logger.info("Attempting to load existing vector store...")
+                self.vectorstore = Chroma(
+                    persist_directory="./chroma_db",
+                    embedding_function=self.embeddings
+                )
+                logger.info("Existing vector store loaded successfully!")
+                return True
+            except Exception as e:
+                logger.info(f"Could not load existing vector store: {str(e)}")
+                logger.info("Creating new vector store...")
+            
+            # Create new Chroma vector store
             self.vectorstore = Chroma.from_documents(
                 documents=chunks,
                 embedding=self.embeddings,
@@ -162,13 +185,6 @@ class PersonalRAGChatbot:
             # Smart workflow: Determine question type and retrieve accordingly
             docs = self._smart_workflow_retrieve(question)
             
-            # Debug: Log retrieved chunks for company questions
-            question_lower = question.lower()
-            if any(company in question_lower for company in ['meta', 'copart', 'stealth', 'startup', 'scale', 'fidelity']):
-                logger.debug(f"Question: {question}")
-                logger.debug(f"Retrieved {len(docs)} chunks")
-                for i, doc in enumerate(docs):
-                    logger.debug(f"  {i+1}. {doc.page_content[:100]}...")
             
             # Extract context from retrieved documents
             context_documents = [doc.page_content for doc in docs]
