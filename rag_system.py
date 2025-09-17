@@ -22,13 +22,19 @@ class PersonalRAGChatbot:
     def setup_embeddings(self):
         """Initialize Hugging Face embeddings"""
         try:
+            logger.info("Loading Hugging Face embeddings model...")
             self.embeddings = HuggingFaceEmbeddings(
                 model_name="sentence-transformers/all-MiniLM-L6-v2",
                 model_kwargs={'device': 'cpu'}
             )
             logger.info("Embeddings model loaded successfully!")
+            return True
         except Exception as e:
             logger.error(f"Error loading embeddings: {str(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            self.embeddings = None
+            return False
     
     
     def load_and_chunk_documents(self):
@@ -69,6 +75,15 @@ class PersonalRAGChatbot:
                 logger.error("No document chunks available")
                 return False
             
+            # Check if embeddings are loaded
+            if self.embeddings is None:
+                logger.error("Embeddings not loaded - attempting to reload...")
+                self.setup_embeddings()
+                if self.embeddings is None:
+                    logger.error("Failed to load embeddings")
+                    return False
+            
+            logger.info("Creating Chroma vector store...")
             # Create Chroma vector store
             self.vectorstore = Chroma.from_documents(
                 documents=chunks,
@@ -81,6 +96,8 @@ class PersonalRAGChatbot:
             
         except Exception as e:
             logger.error(f"Error creating vector store: {str(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
             return False
     
     def _smart_workflow_retrieve(self, question):
@@ -145,13 +162,13 @@ class PersonalRAGChatbot:
             # Smart workflow: Determine question type and retrieve accordingly
             docs = self._smart_workflow_retrieve(question)
             
-            # Debug: Print retrieved chunks for company questions
+            # Debug: Log retrieved chunks for company questions
             question_lower = question.lower()
             if any(company in question_lower for company in ['meta', 'copart', 'stealth', 'startup', 'scale', 'fidelity']):
-                print(f"DEBUG - Question: {question}")
-                print(f"DEBUG - Retrieved {len(docs)} chunks:")
+                logger.debug(f"Question: {question}")
+                logger.debug(f"Retrieved {len(docs)} chunks")
                 for i, doc in enumerate(docs):
-                    print(f"  {i+1}. {doc.page_content[:100]}...")
+                    logger.debug(f"  {i+1}. {doc.page_content[:100]}...")
             
             # Extract context from retrieved documents
             context_documents = [doc.page_content for doc in docs]

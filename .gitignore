@@ -51,5 +51,5 @@ logs/
 *.tmp
 *.temp
 
-# Vector database (will be rebuilt on deployment)
-chroma_db/
+# Vector database (included in deployment for faster startup)
+# chroma_db/
