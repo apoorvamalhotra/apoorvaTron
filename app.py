@@ -61,19 +61,33 @@ I can answer questions about Apoorva's professional experience, achievements, an
         if rag_chatbot.vectorstore is None:
             logger.info("Initializing RAG system on first request...")
             try:
+                logger.info("Loading and chunking documents...")
                 chunks = rag_chatbot.load_and_chunk_documents()
+                logger.info(f"Loaded {len(chunks) if chunks else 0} chunks")
+                
                 if chunks:
-                    rag_chatbot.create_vectorstore(chunks)
-                    logger.info("RAG system initialized successfully!")
+                    logger.info("Creating vector store...")
+                    success = rag_chatbot.create_vectorstore(chunks)
+                    if success:
+                        logger.info("RAG system initialized successfully!")
+                    else:
+                        logger.error("Failed to create vector store")
+                        return jsonify({
+                            'error': 'Failed to create vector store. Please try again later.',
+                            'userid': userid
+                        }), 500
                 else:
+                    logger.error("No chunks loaded from documents")
                     return jsonify({
-                        'error': 'Failed to initialize the knowledge base. Please try again later.',
+                        'error': 'Failed to load documents. Please check if data files exist.',
                         'userid': userid
                     }), 500
             except Exception as e:
                 logger.error(f"Failed to initialize RAG system: {str(e)}")
+                import traceback
+                logger.error(f"Traceback: {traceback.format_exc()}")
                 return jsonify({
-                    'error': 'Failed to initialize the knowledge base. Please try again later.',
+                    'error': f'Failed to initialize the knowledge base: {str(e)}',
                     'userid': userid
                 }), 500
         
