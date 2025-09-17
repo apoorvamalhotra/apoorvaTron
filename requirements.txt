@@ -1,8 +1,20 @@
-langchain==0.1.0
-langchain-community==0.0.10
-sentence-transformers==2.2.2
-chromadb==0.4.18
-python-dotenv==1.0.0
-requests==2.31.0
+# Core web framework
 flask==3.0.0
 flask-cors==4.0.0
+
+# HTTP and environment
+requests==2.31.0
+python-dotenv==1.0.0
+
+# LangChain ecosystem (latest compatible versions)
+langchain==0.3.0
+langchain-community==0.3.0
+langchain-core==0.3.0
+
+# Vector database and embeddings
+chromadb==0.5.0
+sentence-transformers==3.0.0
+
+# Additional dependencies for newer versions
+numpy>=1.24.0
+pydantic>=2.0.0
