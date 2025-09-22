@@ -6,6 +6,9 @@ import os
 import requests
 import json
 import logging
+import threading
+import time
+from datetime import datetime, timedelta
 from typing import Dict, Any, List, Tuple
 from dotenv import load_dotenv
 
@@ -26,10 +29,73 @@ class GeminiAPIService:
         # Store system instruction per session (sent only once)
         self._system_instructions = {}
         
+        # Session tracking for memory management
+        self._session_last_activity = {}  # session_id -> timestamp
+        self._session_lock = threading.Lock()  # Thread-safe access
+        
         # API call statistics
         self._api_call_count = 0
         self._successful_calls = 0
         self._failed_calls = 0
+        
+        # Start cleanup thread
+        self._start_cleanup_thread()
+    
+    def _start_cleanup_thread(self):
+        """Start background thread for automatic session cleanup"""
+        def cleanup_worker():
+            while True:
+                try:
+                    self._cleanup_expired_sessions()
+                    time.sleep(300)  # Check every 5 minutes
+                except Exception as e:
+                    logger.error(f"Error in cleanup thread: {e}")
+                    time.sleep(60)  # Wait 1 minute before retrying
+        
+        cleanup_thread = threading.Thread(target=cleanup_worker, daemon=True)
+        cleanup_thread.start()
+        logger.info("Session cleanup thread started")
+    
+    def _cleanup_expired_sessions(self):
+        """Clean up sessions that have been inactive for more than 2 hours"""
+        with self._session_lock:
+            current_time = datetime.now()
+            expired_sessions = []
+            
+            for session_id, last_activity in self._session_last_activity.items():
+                # Check if session has been inactive for more than 2 hours
+                if current_time - last_activity > timedelta(hours=2):
+                    expired_sessions.append(session_id)
+            
+            # Clean up expired sessions
+            for session_id in expired_sessions:
+                self._cleanup_session(session_id)
+                logger.info(f"Cleaned up expired session: {session_id}")
+    
+    def _cleanup_session(self, session_id: str):
+        """Clean up a specific session from memory"""
+        with self._session_lock:
+            # Remove conversation history
+            if session_id in self._conversation_store:
+                del self._conversation_store[session_id]
+            
+            # Remove system instructions
+            if session_id in self._system_instructions:
+                del self._system_instructions[session_id]
+            
+            # Remove activity tracking
+            if session_id in self._session_last_activity:
+                del self._session_last_activity[session_id]
+    
+    def _update_session_activity(self, session_id: str):
+        """Update the last activity timestamp for a session"""
+        with self._session_lock:
+            self._session_last_activity[session_id] = datetime.now()
+    
+    def cleanup_session(self, session_id: str):
+        """Manually cleanup a session (for new chat / window close)"""
+        self._cleanup_session(session_id)
+        logger.info(f"Manually cleaned up session: {session_id}")
     
     def call_gemini_api(self, chat_session_id: str, user_input: str, context_documents: List[str], is_first_call: bool = False) -> Tuple[str, str]:
         """
@@ -39,6 +105,9 @@ class GeminiAPIService:
         if not self.GEMINI_API_KEY:
             return None, "API key is not configured."
 
+        # Update session activity
+        self._update_session_activity(chat_session_id)
+        
         self._api_call_count += 1
         
         try:
@@ -244,6 +313,27 @@ INSTRUCTIONS: Answer the user's question using ONLY the information provided in 
             "successful_calls": self._successful_calls,
             "failed_calls": self._failed_calls
         }
+    
+    def get_session_stats(self) -> Dict[str, Any]:
+        """Get session statistics for monitoring."""
+        with self._session_lock:
+            current_time = datetime.now()
+            active_sessions = 0
+            expired_sessions = 0
+            
+            for session_id, last_activity in self._session_last_activity.items():
+                if current_time - last_activity > timedelta(hours=2):
+                    expired_sessions += 1
+                else:
+                    active_sessions += 1
+            
+            return {
+                "total_sessions": len(self._session_last_activity),
+                "active_sessions": active_sessions,
+                "expired_sessions": expired_sessions,
+                "conversation_store_size": len(self._conversation_store),
+                "system_instructions_size": len(self._system_instructions)
+            }
 
 # Global instance
 gemini_service = GeminiAPIService()

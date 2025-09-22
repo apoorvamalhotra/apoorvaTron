@@ -1,5 +1,6 @@
 let userId = null;
 let extractedData = null;
+let sessionStartTime = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     const chatBox = document.getElementById('chat-box');
@@ -23,6 +24,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     startChatBtn.addEventListener('click', function() {
         startChat();
+    });
+
+    // Add new chat button functionality
+    const newChatBtn = document.getElementById('switch-session-btn');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', function() {
+            startNewChat();
+        });
+    }
+
+    // Handle window close/refresh
+    window.addEventListener('beforeunload', function() {
+        cleanupSession();
+    });
+
+    // Handle page visibility change (tab switching)
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // Page is hidden, could trigger cleanup after some time
+            setTimeout(() => {
+                if (document.hidden && userId) {
+                    cleanupSession();
+                }
+            }, 300000); // 5 minutes
+        }
     });
 
 
@@ -57,6 +83,7 @@ function startChat() {
     // Generate a random test ID automatically
     const testId = 'test_' + Math.random().toString(36).substr(2, 9);
     userId = testId;
+    sessionStartTime = Date.now();
     extractedData = null;
     hideSessionPopup();
     clearChatBox();
@@ -299,3 +326,57 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function startNewChat() {
+    // Cleanup current session
+    cleanupSession();
+    
+    // Generate a new user ID
+    const testId = 'test_' + Math.random().toString(36).substr(2, 9);
+    userId = testId;
+    sessionStartTime = Date.now();
+    extractedData = null;
+    
+    // Clear chat history
+    clearChatBox();
+    hideExtractionButton();
+    
+    // Ensure chat container is visible
+    const chatContainer = document.getElementById('chat-container');
+    if (chatContainer) {
+        chatContainer.classList.remove('hidden');
+    }
+    
+    // Reset input state
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    if (userInput) {
+        userInput.disabled = false;
+        userInput.placeholder = 'Type your message...';
+        userInput.value = '';
+    }
+    if (sendButton) {
+        sendButton.disabled = false;
+    }
+    
+    // Send initial message
+    sendHiMessage();
+}
+
+function cleanupSession() {
+    if (userId) {
+        // Send cleanup request to server
+        fetch(`/cleanup/${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).catch(error => {
+            console.log('Cleanup request failed:', error);
+        });
+        
+        // Reset local variables
+        userId = null;
+        sessionStartTime = null;
+    }
+}

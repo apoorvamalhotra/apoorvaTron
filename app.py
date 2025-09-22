@@ -120,16 +120,46 @@ def health():
 
 @app.route('/stats')
 def stats():
-    """Get API statistics"""
+    """Get API and session statistics"""
     try:
         api_stats = gemini_service.get_api_stats()
+        session_stats = gemini_service.get_session_stats()
         return jsonify({
             'api_stats': api_stats,
+            'session_stats': session_stats,
             'vectorstore_ready': rag_chatbot.vectorstore is not None
         })
     except Exception as e:
         logger.error(f"Error getting stats: {str(e)}")
         return jsonify({'error': 'Could not retrieve statistics'}), 500
+
+@app.route('/cleanup/<session_id>', methods=['POST'])
+def cleanup_session(session_id):
+    """Manually cleanup a specific session"""
+    try:
+        gemini_service.cleanup_session(session_id)
+        return jsonify({
+            'status': 'success',
+            'message': f'Session {session_id} cleaned up successfully'
+        })
+    except Exception as e:
+        logger.error(f"Error cleaning up session {session_id}: {str(e)}")
+        return jsonify({'error': 'Could not cleanup session'}), 500
+
+@app.route('/cleanup-all', methods=['POST'])
+def cleanup_all_sessions():
+    """Cleanup all expired sessions"""
+    try:
+        gemini_service._cleanup_expired_sessions()
+        session_stats = gemini_service.get_session_stats()
+        return jsonify({
+            'status': 'success',
+            'message': 'All expired sessions cleaned up',
+            'session_stats': session_stats
+        })
+    except Exception as e:
+        logger.error(f"Error cleaning up all sessions: {str(e)}")
+        return jsonify({'error': 'Could not cleanup sessions'}), 500
 
 if __name__ == '__main__':
     # Run the Flask app - RAG system will initialize on first request
