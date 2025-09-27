@@ -112,7 +112,7 @@ Action: I designed and architected a secure, developer-centric RESTful API for a
 Result: Reduced the time-to-market for developer PaaS deployments by 86%.
 
 
-
+Fidelity International Limited | India
 Technical Product Manager I (Founding Member) – Global Infrastructure Automation (Jul 2019 - Aug 2020)
 
 Implemented an ML-based model for forecasting operational costs during COVID by analyzing employee engagement statistics to optimize cost & achieve a cost accuracy rate of 91.4%
@@ -134,7 +134,7 @@ Action: I authored a full suite of documentation, including onboarding guides, r
 Result: My work successfully lowered production incidents by 15%.
 
 
-
+Fidelity International Limited | India
 Associate Product Manager – Data, Security & Infrastructure Automation (Jul 2018 - Jun 2019)
 
 Engineered a product roadmap for creating an automation for managing user identities, roles & permissions across organization by analyzing Nexpose data to generate feed files using Nexpose APIs for IAM portal, reducing time for user data management from 1 hour to 4 minutes per day

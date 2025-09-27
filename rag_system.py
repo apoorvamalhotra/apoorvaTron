@@ -143,11 +143,30 @@ class PersonalRAGChatbot:
             if keyword in question_lower:
                 return self._retrieve_company_experience(company_name)
         
-        # Timeline/experience questions - let system prompt handle company identification
+        # Timeline/experience questions - get most recent experience first
         timeline_keywords = ['most recent', 'last company', 'current', 'latest', 'recent experience', 'previous', 'earliest', 'first']
         if any(keyword in question_lower for keyword in timeline_keywords):
-            # For timeline questions, get broader context and let system prompt decide
+            # For timeline questions, prioritize most recent experience (Stealth Startup)
+            if any(word in question_lower for word in ['most recent', 'latest', 'current', 'last']):
+                # Get Stealth Startup experience first
+                stealth_docs = self.vectorstore.similarity_search("Stealth Startup AI Product Lead May 2025 September 2025", k=4)
+                if stealth_docs:
+                    return stealth_docs
+            elif any(word in question_lower for word in ['earliest', 'first']):
+                # Get Fidelity experience for earliest questions
+                fidelity_docs = self.vectorstore.similarity_search("Fidelity International Limited Global Infrastructure Automation", k=4)
+                if fidelity_docs:
+                    return fidelity_docs
+            
+            # Fallback to broader context for other timeline questions
             retriever = self.vectorstore.as_retriever(search_kwargs={"k": 6})
+            return retriever.get_relevant_documents(question)
+        
+        # General questions about work history - get broader context
+        work_history_keywords = ['companies', 'worked at', 'experience', 'background', 'career', 'jobs', 'positions']
+        if any(keyword in question_lower for keyword in work_history_keywords):
+            # For work history questions, get more chunks to cover all companies
+            retriever = self.vectorstore.as_retriever(search_kwargs={"k": 8})
             return retriever.get_relevant_documents(question)
         
         # General questions - default retrieval
@@ -185,6 +204,14 @@ class PersonalRAGChatbot:
             # Smart workflow: Determine question type and retrieve accordingly
             docs = self._smart_workflow_retrieve(question)
             
+            # Debug: Print retrieved chunks for company, timeline, and work history questions
+            question_lower = question.lower()
+            debug_triggers = ['meta', 'copart', 'stealth', 'startup', 'scale', 'fidelity', 'most recent', 'latest', 'current', 'last', 'earliest', 'first', 'companies', 'worked at', 'experience', 'background', 'career']
+            if any(trigger in question_lower for trigger in debug_triggers):
+                print(f"DEBUG - Question: {question}")
+                print(f"DEBUG - Retrieved {len(docs)} chunks:")
+                for i, doc in enumerate(docs):
+                    print(f"  {i+1}. {doc.page_content[:100]}...")
             
             # Extract context from retrieved documents
             context_documents = [doc.page_content for doc in docs]

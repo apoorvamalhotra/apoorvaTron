@@ -247,7 +247,11 @@ CONTEXT INFORMATION:
 USER'S QUESTION:
 {user_input}
 
-INSTRUCTIONS: Answer the user's question using ONLY the information provided in the context above. Do not invent, assume, or add any details not present in the context."""
+INSTRUCTIONS: 
+1. Answer the user's question using ONLY the information provided in the context above
+2. Do not invent, assume, or add any details not present in the context
+3. For timeline questions, use the system prompt timeline information
+4. For work history questions, mention all companies from the timeline if context contains information about them"""
         
         return formatted_message
     

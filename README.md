@@ -13,7 +13,7 @@ A Retrieval-Augmented Generation (RAG) chatbot that represents Apoorva Malhotra,
 
 ## Live Demo
 
-**Deployed on Google Cloud Run**: [URL will be here after deployment]
+**Deployed on Google Cloud Run**: https://tinyurl.com/apoorvatron
 
 ## Tech Stack
 
